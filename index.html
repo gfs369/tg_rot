@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>test11</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+</head>
+
+<body>
+<script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="wind123probot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+<script type="text/javascript">
+
+    // 下面的"flutterInAppWebViewPlatformReady"为固定写法
+    // "callHandler中的第一个参数为方法名"与flutter中注册的JS处理方法名称一致
+    // window.addEventListener("flutterInAppWebViewPlatformReady", function () {
+
+    // })
+
+    function onTelegramAuth(user) {
+        //alert('Logged in as ' + JSON.stringify(user || "{}"));
+
+        console.log('user = ' + JSON.stringify(user || "{}"));
+
+        window.addEventListener("flutterInAppWebViewPlatformReady", function () {
+            window.flutter_inappwebview
+            .callHandler("telegramUser", JSON.stringify(user || "{}"))
+            .then(function (res) { });
+        })
+    }
+
+    function openWindow() {
+        TWidgetLogin.auth();
+        // 打印控制台输出日志
+        console.log('已打开');
+    }
+</script>
+</body>
+
+</html>
