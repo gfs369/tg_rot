@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>USDT Alert · Monitor Test</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f5f7;
+      --card: #ffffff;
+      --text: #12202b;
+      --muted: #5f6f7b;
+      --line: #e3e8ec;
+      --accent: #26a17b;
+      --accent-pressed: #1e8a68;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, #eaf3ef 0%, var(--bg) 40%);
+      color: var(--text);
+      padding: 20px 16px 40px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+    .sub {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .note {
+      background: #fff8e8;
+      border: 1px solid #f0e0b8;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #6b5a2c;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+    .row {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .meta { min-width: 0; flex: 1; }
+    .chain {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .addr {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      word-break: break-all;
+      line-height: 1.35;
+    }
+    .btn {
+      flex-shrink: 0;
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 14px;
+      text-decoration: none;
+    }
+    .btn:active { background: var(--accent-pressed); }
+  </style>
+</head>
+<body>
+  <h1>Active Wallets (Test)</h1>
+  <p class="sub">点击 Monitor 打开 AppsFlyer OneLink。已安装会打开 App 并预填地址；未安装会跳转应用商店（由 OneLink 处理）。</p>
+  <div class="note">
+    链接格式：<code>https://usdtalert.onelink.me/AcVa/qa7sx03x?wallet_address=...</code><br />
+    真机建议用 Safari / Chrome 打开本页；App 内 WebView 会把 OneLink 交系统处理。
+  </div>
+  <div class="list" id="list"></div>
+
+  <script>
+    const ONE_LINK_BASE = 'https://usdtalert.onelink.me/AcVa/qa7sx03x';
+    const ADDRESSES = [
+      { chain: 'TRC20', address: 'TGkHfYXkgUgHjAKcYf3gob2rLd1N7BqRQs' },
+      { chain: 'ERC20', address: '0x0eBd9eF01bF9Cbfe0f5d8bd3C291D40E54B78aF1' },
+      { chain: 'TRC20', address: 'TYASr5UV6HEcXatwdFQfmLVUqQQWeusEhE' },
+      { chain: 'ERC20', address: '0xdAC17F958D2ee523a2206206994597C13D831ec7' },
+      { chain: 'TRC20', address: 'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf' }
+    ];
+
+    function monitorUrl(address) {
+      return ONE_LINK_BASE + '?wallet_address=' + encodeURIComponent(address);
+    }
+
+    const list = document.getElementById('list');
+    ADDRESSES.forEach(function (item) {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML =
+        '<div class="meta">' +
+          '<div class="chain">' + item.chain + '</div>' +
+          '<div class="addr">' + item.address + '</div>' +
+        '</div>' +
+        '<a class="btn" href="' + monitorUrl(item.address) + '">Monitor</a>';
+      list.appendChild(row);
+    });
+  </script>
+</body>
+</html>
